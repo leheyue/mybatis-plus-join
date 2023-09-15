@@ -6,11 +6,10 @@ import com.baomidou.mybatisplus.core.conditions.segments.MergeSegments;
 import com.baomidou.mybatisplus.core.toolkit.*;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.github.yulichang.config.ConfigProperties;
-import com.github.yulichang.toolkit.Constant;
 import com.github.yulichang.toolkit.LambdaUtils;
-import com.github.yulichang.toolkit.TableList;
-import com.github.yulichang.toolkit.WrapperUtils;
+import com.github.yulichang.toolkit.*;
 import com.github.yulichang.toolkit.support.ColumnCache;
+import com.github.yulichang.toolkit.support.FieldCache;
 import com.github.yulichang.wrapper.interfaces.Chain;
 import com.github.yulichang.wrapper.interfaces.Query;
 import com.github.yulichang.wrapper.interfaces.QueryLabel;
@@ -68,6 +67,12 @@ public class MPJLambdaWrapper<T> extends MPJAbstractLambdaWrapper<T, MPJLambdaWr
      */
     @Getter
     private Map<String, Wrapper<?>> wrapperMap;
+
+    /**
+     * 子查询wrapper
+     */
+    @Getter
+    private MPJLambdaWrapper<T> subWrapper;
 
     /**
      * 推荐使用 带 class 的构造方法
@@ -181,9 +186,16 @@ public class MPJLambdaWrapper<T> extends MPJAbstractLambdaWrapper<T, MPJLambdaWr
         if (ArrayUtils.isNotEmpty(columns)) {
             Class<?> aClass = LambdaUtils.getEntityClass(columns[0]);
             Map<String, SelectCache> cacheMap = ColumnCache.getMapField(aClass);
+            Map<String, FieldCache> fieldMap = MPJReflectionKit.getFieldMap(aClass);
             for (SFunction<E, ?> s : columns) {
-                SelectCache cache = cacheMap.get(LambdaUtils.getName(s));
-                getSelectColum().add(new SelectNormal(cache, index, hasAlias, alias));
+                String property = LambdaUtils.getName(s);
+                if (CollectionUtils.isEmpty(cacheMap)) {
+                    FieldCache cache = fieldMap.get(property);
+                    getSelectColum().add(new SelectProperty(cache, hasAlias, alias));
+                } else {
+                    SelectCache cache = cacheMap.get(property);
+                    getSelectColum().add(new SelectNormal(cache, index, hasAlias, alias));
+                }
             }
         }
         return typedThis;
@@ -217,8 +229,31 @@ public class MPJLambdaWrapper<T> extends MPJAbstractLambdaWrapper<T, MPJLambdaWr
         wrapper.subTableAlias = st;
         consumer.accept(wrapper);
         addCustomWrapper(wrapper);
-        String sql = WrapperUtils.buildSubSqlByWrapper(clazz, wrapper, LambdaUtils.getName(alias));
+        String sql = WrapperUtils.buildSubSqlByWrapper(clazz, wrapper, this.getCacheColumn(alias));
         this.selectColumns.add(new SelectString(sql, hasAlias, this.alias));
+        return typedThis;
+    }
+
+    /**
+     * from子查询
+     */
+    @SuppressWarnings("DuplicatedCode")
+    public <E> MPJLambdaWrapper<T> fromSub(Consumer<MPJLambdaWrapper<T>> consumer, Class<E> tag) {
+        Class<T> clazz = this.getEntityClass();
+        MPJLambdaWrapper<T> wrapper = new MPJLambdaWrapper<T>(null, clazz, SharedString.emptyString(), paramNameSeq, paramNameValuePairs,
+                new MergeSegments(), SharedString.emptyString(), SharedString.emptyString(), SharedString.emptyString(),
+                new TableList(), null, null, null, this.getTableName()) {
+        };
+        this.hasAlias = true;
+        this.tableList.setRootClass(tag);
+        wrapper.tableList.setAlias(this.alias);
+        wrapper.tableList.setRootClass(clazz);
+        wrapper.alias = this.alias;
+        wrapper.subTableAlias = this.alias;
+        consumer.accept(wrapper);
+        this.subWrapper = wrapper;
+        String sql = WrapperUtils.buildSubSqlByWrapper(clazz, wrapper, null);
+        this.setTableName(tableName -> sql);
         return typedThis;
     }
 
@@ -301,6 +336,15 @@ public class MPJLambdaWrapper<T> extends MPJAbstractLambdaWrapper<T, MPJLambdaWr
                         prefix = tableList.getPrefix(i.getIndex(), i.getClazz(), false);
                     }
                 }
+                if (!Objects.isNull(this.subWrapper) && this.subWrapper.alias.equals(prefix)) {
+                    List<Select> subSelectColumns = this.subWrapper.getSelectColum();
+                    List<String> subColumns = subSelectColumns.stream().map(x ->
+                            StringUtils.isNotBlank(x.getAlias()) ? x.getAlias() : x.getColumn())
+                            .collect(Collectors.toList());
+                    if (!subColumns.contains(i.getColumn())) {
+                        return null;
+                    }
+                }
                 String str = prefix + StringPool.DOT + i.getColumn();
                 if (i.isFunc()) {
                     SelectFunc.Arg[] args = i.getArgs();
@@ -317,7 +361,7 @@ public class MPJLambdaWrapper<T> extends MPJAbstractLambdaWrapper<T, MPJLambdaWr
                 } else {
                     return i.isHasAlias() ? (str + Constant.AS + i.getAlias()) : str;
                 }
-            }).collect(Collectors.joining(StringPool.COMMA));
+            }).filter(x -> StringUtils.isNotBlank(x)).collect(Collectors.joining(StringPool.COMMA));
             sqlSelect.setStringValue(s);
         }
         return sqlSelect.getStringValue();
@@ -361,6 +405,7 @@ public class MPJLambdaWrapper<T> extends MPJAbstractLambdaWrapper<T, MPJLambdaWr
         selectColumns.clear();
         wrapperIndex = new AtomicInteger(0);
         wrapperMap.clear();
+        subWrapper = null;
         resultMapMybatisLabel.clear();
     }
 }

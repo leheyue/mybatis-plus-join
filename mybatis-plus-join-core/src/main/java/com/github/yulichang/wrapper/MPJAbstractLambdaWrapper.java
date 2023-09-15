@@ -23,6 +23,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -230,13 +231,21 @@ public abstract class MPJAbstractLambdaWrapper<T, Children extends MPJAbstractLa
 
     protected String columnToString(Integer index, SFunction<?, ?> column, boolean isJoin, PrefixEnum prefixEnum) {
         Class<?> entityClass = LambdaUtils.getEntityClass(column);
-        return getDefault(index, entityClass, isJoin, prefixEnum) + StringPool.DOT + getCache(column).getColumn();
+        return getDefault(index, entityClass, isJoin, prefixEnum) + StringPool.DOT + getCacheColumn(column);
     }
 
-    protected SelectCache getCache(SFunction<?, ?> fn) {
+    public SelectCache getCache(SFunction<?, ?> fn) {
         Class<?> aClass = LambdaUtils.getEntityClass(fn);
         Map<String, SelectCache> cacheMap = ColumnCache.getMapField(aClass);
         return cacheMap.get(LambdaUtils.getName(fn));
+    }
+
+    public String getCacheColumn(SFunction<?, ?> fn) {
+        SelectCache selectCache = getCache(fn);
+        if (Objects.isNull(selectCache)) {
+            return LambdaUtils.getName(fn);
+        }
+        return selectCache.getColumn();
     }
 
     /**

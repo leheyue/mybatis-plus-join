@@ -40,8 +40,9 @@ public class WrapperUtils {
                 ((wrapper.isEmptyOfNormal() ? StringPool.EMPTY : (hasWhere ? " AND " : " WHERE ")) + wrapper.getSqlSegment()) : StringPool.EMPTY;
 
         String sqlComment = Optional.ofNullable(wrapper.getSqlComment()).orElse(StringPool.EMPTY);
-        return String.format(" (%s SELECT %s FROM %s %s %s %s %s %s %s) AS %s ",
+        return String.format(" (%s SELECT %s %s FROM %s %s %s %s %s %s %s) %s ",
                 first,
+                wrapper.getSelectDistinct() ? "DISTINCT" : "",
                 wrapper.getSqlSelect(),
                 tableInfo.getTableName(),
                 wrapper.getAlias(),
@@ -50,7 +51,7 @@ public class WrapperUtils {
                 subLogic,
                 sqlSegment,
                 sqlComment,
-                alias);
+                StringUtils.isNotBlank(alias) ? "AS " + alias : "");
     }
 
     public static String buildUnionSqlByWrapper(Class<?> clazz, MPJLambdaWrapper<?> wrapper) {
@@ -74,8 +75,9 @@ public class WrapperUtils {
                 ((wrapper.isEmptyOfNormal() ? StringPool.EMPTY : (hasWhere ? " AND " : " WHERE ")) + wrapper.getSqlSegment()) : StringPool.EMPTY;
 
         String sqlComment = Optional.ofNullable(wrapper.getSqlComment()).orElse(StringPool.EMPTY);
-        return String.format(" %s SELECT %s FROM %s %s %s %s %s %s %s ",
+        return String.format(" %s SELECT %s %s FROM %s %s %s %s %s %s %s ",
                 first,
+                wrapper.getSelectDistinct() ? "DISTINCT" : "",
                 wrapper.getSqlSelect(),
                 tableInfo.getTableName(),
                 wrapper.getAlias(),
@@ -124,6 +126,9 @@ public class WrapperUtils {
     }
 
     private static String mainLogic(boolean hasWhere, Class<?> clazz, MPJLambdaWrapper<?> wrapper) {
+        if (!wrapper.getLogicSql()) {
+            return StringPool.EMPTY;
+        }
         String info = LogicInfoUtils.getLogicInfo(null, clazz, true, wrapper.getAlias());
         if (StringUtils.isNotBlank(info)) {
             if (hasWhere) {

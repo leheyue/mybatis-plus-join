@@ -2,13 +2,13 @@ package com.github.yulichang.toolkit.support;
 
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.github.yulichang.config.ConfigProperties;
-import com.github.yulichang.toolkit.Asserts;
 import com.github.yulichang.toolkit.TableHelper;
 import com.github.yulichang.wrapper.segments.SelectCache;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -28,8 +28,10 @@ public class ColumnCache {
     public static List<SelectCache> getListField(Class<?> clazz) {
         return LIST_CACHE.computeIfAbsent(clazz, c -> {
             TableInfo tableInfo = TableHelper.get(clazz);
-            Asserts.hasTable(tableInfo, c);
             List<SelectCache> list = new ArrayList<>();
+            if (Objects.isNull(tableInfo)) {
+                return list;
+            }
             if (ConfigProperties.tableInfoAdapter.mpjHasPK(tableInfo)) {
                 list.add(new SelectCache(clazz, true, tableInfo.getKeyColumn(), tableInfo.getKeyType(), tableInfo.getKeyProperty(), null));
             }

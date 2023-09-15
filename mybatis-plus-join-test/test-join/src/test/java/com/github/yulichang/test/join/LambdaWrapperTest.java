@@ -1061,6 +1061,30 @@ class LambdaWrapperTest {
      * select 子查询
      */
     @Test
+    void fromSub() {
+        ThreadLocalUtils.set("SELECT t.id,t.userId FROM ( SELECT case when t.id = 1 then 1 when t.id = 2 then 2 else 3 end AS createBy,t1.id AS userId,t.id,t.`name` AS userName FROM `user` t LEFT JOIN address t1 ON (t1.user_id = t.id) WHERE (t.id <= ?) ) t LEFT JOIN address t1 ON (t1.id = t.id) WHERE (t.createBy <= ?)");
+        MPJLambdaWrapper<UserDO> wrapper1 = JoinWrappers.lambda(UserDO.class)
+//                .selectAll(UserDO.class)
+                .select(UserDto::getId)
+                .select(UserDto::getUserId)
+                .fromSub(w -> w.selectFunc("case when %s = 1 then 1 when %s = 2 then 2 else 3 end", arg ->
+                                arg.accept(UserDO::getId, UserDO::getId), UserDto::getCreateBy)
+                        .selectAs(AddressDO::getId, UserDto::getUserId)
+                        .select(UserDO::getId)
+                        .selectAs(UserDO::getName, UserDto::getUserName)
+                        .leftJoin(AddressDO.class, AddressDO::getUserId, UserDO::getId)
+                        .disableLogicDel().disableSubLogicDel()
+                        .le(UserDO::getId, 100), UserDto.class)
+                .leftJoin(AddressDO.class, AddressDO::getId, UserDto::getId)
+                .disableLogicDel().disableSubLogicDel()
+                .le(UserDto::getCreateBy, 100);
+        wrapper1.list(UserDto.class);
+    }
+
+    /**
+     * select 子查询
+     */
+    @Test
     void checkOrderBy() {
         MPJLambdaWrapper<UserDO> wrapper = JoinWrappers.lambda(UserDO.class)
                 .selectAll(UserDO.class)
