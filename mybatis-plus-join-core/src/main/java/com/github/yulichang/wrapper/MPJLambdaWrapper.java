@@ -341,7 +341,9 @@ public class MPJLambdaWrapper<T> extends MPJAbstractLambdaWrapper<T, MPJLambdaWr
                     List<String> subColumns = subSelectColumns.stream().map(x ->
                             StringUtils.isNotBlank(x.getAlias()) ? x.getAlias() : x.getColumn())
                             .collect(Collectors.toList());
-                    if (!subColumns.contains(i.getColumn())) {
+                    boolean noneMatch = subColumns.stream().noneMatch(x -> x.equals(i.getColumn()) ||
+                            x.endsWith(Constant.AS + i.getColumn()));
+                    if (noneMatch) {
                         return null;
                     }
                 }

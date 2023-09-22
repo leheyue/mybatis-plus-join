@@ -40,7 +40,7 @@ public class WrapperUtils {
                 ((wrapper.isEmptyOfNormal() ? StringPool.EMPTY : (hasWhere ? " AND " : " WHERE ")) + wrapper.getSqlSegment()) : StringPool.EMPTY;
 
         String sqlComment = Optional.ofNullable(wrapper.getSqlComment()).orElse(StringPool.EMPTY);
-        return String.format(" (%s SELECT %s %s FROM %s %s %s %s %s %s %s) %s ",
+        return String.format(" (%s SELECT %s %s FROM %s %s %s %s %s %s %s) %s",
                 first,
                 wrapper.getSelectDistinct() ? "DISTINCT" : "",
                 wrapper.getSqlSelect(),
