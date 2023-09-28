@@ -1,9 +1,9 @@
-package com.github.yulichang.test.kt.service.impl
+package com.github.leheyue.test.kt.service.impl
 
-import com.github.yulichang.base.MPJBaseServiceImpl
-import com.github.yulichang.test.kt.entity.UserDO
-import com.github.yulichang.test.kt.mapper.UserMapper
-import com.github.yulichang.test.kt.service.UserService
+import com.github.leheyue.base.MPJBaseServiceImpl
+import com.github.leheyue.test.kt.entity.UserDO
+import com.github.leheyue.test.kt.mapper.UserMapper
+import com.github.leheyue.test.kt.service.UserService
 import org.springframework.stereotype.Service
 
 @Service

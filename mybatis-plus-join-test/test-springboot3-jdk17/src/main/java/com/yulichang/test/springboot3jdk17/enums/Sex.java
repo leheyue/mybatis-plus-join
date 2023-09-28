@@ -1,4 +1,4 @@
-package com.yulichang.test.springboot3jdk17.enums;
+package com.leheyue.test.springboot3jdk17.enums;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
 import lombok.Getter;

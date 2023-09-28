@@ -1,6 +1,6 @@
-package com.github.yulichang.test.kt.mapper
+package com.github.leheyue.test.kt.mapper
 
-import com.github.yulichang.test.kt.entity.UserDO
+import com.github.leheyue.test.kt.entity.UserDO
 import org.apache.ibatis.annotations.Mapper
 
 @Mapper

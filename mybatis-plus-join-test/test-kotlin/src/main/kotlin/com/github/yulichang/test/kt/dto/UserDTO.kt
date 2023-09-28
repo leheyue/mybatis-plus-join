@@ -1,7 +1,7 @@
-package com.github.yulichang.test.kt.dto
+package com.github.leheyue.test.kt.dto
 
-import com.github.yulichang.test.kt.entity.UserDO
-import com.github.yulichang.test.kt.enums.Sex
+import com.github.leheyue.test.kt.entity.UserDO
+import com.github.leheyue.test.kt.enums.Sex
 import lombok.Data
 import lombok.ToString
 

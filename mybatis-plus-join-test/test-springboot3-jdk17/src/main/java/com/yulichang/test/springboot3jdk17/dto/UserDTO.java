@@ -1,7 +1,7 @@
-package com.yulichang.test.springboot3jdk17.dto;
+package com.leheyue.test.springboot3jdk17.dto;
 
-import com.yulichang.test.springboot3jdk17.entity.UserDO;
-import com.yulichang.test.springboot3jdk17.enums.Sex;
+import com.leheyue.test.springboot3jdk17.entity.UserDO;
+import com.leheyue.test.springboot3jdk17.enums.Sex;
 import lombok.Data;
 import lombok.ToString;
 

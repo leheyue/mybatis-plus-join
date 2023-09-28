@@ -1,6 +1,6 @@
-package com.github.yulichang.test.kt.service
+package com.github.leheyue.test.kt.service
 
-import com.github.yulichang.base.MPJBaseService
-import com.github.yulichang.test.kt.entity.UserDO
+import com.github.leheyue.base.MPJBaseService
+import com.github.leheyue.test.kt.entity.UserDO
 
 interface UserService : MPJBaseService<UserDO?>

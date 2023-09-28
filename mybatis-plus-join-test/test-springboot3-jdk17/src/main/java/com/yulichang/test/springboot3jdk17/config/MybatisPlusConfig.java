@@ -1,11 +1,11 @@
-package com.yulichang.test.springboot3jdk17.config;
+package com.leheyue.test.springboot3jdk17.config;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.InnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
-import com.yulichang.test.springboot3jdk17.util.ThreadLocalUtils;
+import com.leheyue.test.springboot3jdk17.util.ThreadLocalUtils;
 import org.apache.ibatis.builder.SqlSourceBuilder;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.BoundSql;

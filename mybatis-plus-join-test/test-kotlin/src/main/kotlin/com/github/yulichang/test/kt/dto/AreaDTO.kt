@@ -1,4 +1,4 @@
-package com.github.yulichang.test.kt.dto
+package com.github.leheyue.test.kt.dto
 
 
 @Suppress("unused")

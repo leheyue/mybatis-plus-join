@@ -1,4 +1,4 @@
-package com.yulichang.test.springboot3jdk17.dto;
+package com.leheyue.test.springboot3jdk17.dto;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;

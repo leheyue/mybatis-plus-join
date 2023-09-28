@@ -1,4 +1,4 @@
-package com.yulichang.test.springboot3jdk17;
+package com.leheyue.test.springboot3jdk17;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

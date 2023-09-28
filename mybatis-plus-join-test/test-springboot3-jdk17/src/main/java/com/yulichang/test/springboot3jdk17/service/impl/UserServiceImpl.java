@@ -1,9 +1,9 @@
-package com.yulichang.test.springboot3jdk17.service.impl;
+package com.leheyue.test.springboot3jdk17.service.impl;
 
-import com.github.yulichang.base.MPJBaseServiceImpl;
-import com.yulichang.test.springboot3jdk17.entity.UserDO;
-import com.yulichang.test.springboot3jdk17.mapper.UserMapper;
-import com.yulichang.test.springboot3jdk17.service.UserService;
+import com.github.leheyue.base.MPJBaseServiceImpl;
+import com.leheyue.test.springboot3jdk17.entity.UserDO;
+import com.leheyue.test.springboot3jdk17.mapper.UserMapper;
+import com.leheyue.test.springboot3jdk17.service.UserService;
 import org.springframework.stereotype.Service;
 
 @Service

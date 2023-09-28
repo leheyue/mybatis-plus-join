@@ -1,11 +1,11 @@
-package com.github.yulichang.test.kt.entity
+package com.github.leheyue.test.kt.entity
 
 import com.baomidou.mybatisplus.annotation.TableField
 import com.baomidou.mybatisplus.annotation.TableLogic
 import com.baomidou.mybatisplus.annotation.TableName
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler
-import com.github.yulichang.annotation.DynamicTableName
-import com.github.yulichang.test.kt.enums.Sex
+import com.github.leheyue.annotation.DynamicTableName
+import com.github.leheyue.test.kt.enums.Sex
 import lombok.experimental.FieldNameConstants
 import java.io.Serializable
 import java.time.LocalDateTime

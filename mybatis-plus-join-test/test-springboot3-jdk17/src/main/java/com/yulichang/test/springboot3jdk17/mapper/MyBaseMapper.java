@@ -1,6 +1,6 @@
-package com.yulichang.test.springboot3jdk17.mapper;
+package com.leheyue.test.springboot3jdk17.mapper;
 
-import com.github.yulichang.base.MPJBaseMapper;
+import com.github.leheyue.base.MPJBaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.io.Serializable;

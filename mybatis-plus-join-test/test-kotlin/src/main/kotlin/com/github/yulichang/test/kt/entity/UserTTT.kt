@@ -1,4 +1,4 @@
-package com.github.yulichang.test.kt.entity
+package com.github.leheyue.test.kt.entity
 
 @Suppress("unused")
 class UserTTT : UserDO()

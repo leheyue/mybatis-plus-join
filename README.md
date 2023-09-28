@@ -48,14 +48,14 @@ QQ群:1022221898  或者
 - Maven
   ```xml
   <dependency>
-      <groupId>com.github.yulichang</groupId>
+      <groupId>com.github.leheyue</groupId>
       <artifactId>mybatis-plus-join-boot-starter</artifactId>
       <version>1.4.6</version>
   </dependency>
   ```
 - Gradle
   ```
-   implementation 'com.github.yulichang:mybatis-plus-join-boot-starter:1.4.6'
+   implementation 'com.github.leheyue:mybatis-plus-join-boot-starter:1.4.6'
   ```
   或者clone代码到本地执行 mvn install, 再引入以上依赖  
   <br>
@@ -69,6 +69,65 @@ QQ群:1022221898  或者
 * serviceImpl继承MPJBaseServiceImpl (可选)
 
 ### Lambda形式用法（MPJLambdaWrapper）
+
+#### 嵌套子查询
+
+```java
+class test {
+    @Resource
+    private UserMapper userMapper;
+
+    void testJoin() {
+        //和Mybatis plus一致，MPJLambdaWrapper的泛型必须是主表的泛型，并且要用主表的Mapper来调用
+        MPJLambdaWrapper<UserDO> wrapper = JoinWrappers.lambda(UserDO.class)
+                .select(UserDto::getId)
+                .select(UserDto::getUserId)
+                .fromSub(w -> w.selectFunc("case when %s = 1 then 1 when %s = 2 then 2 else 3 end", arg ->
+                                arg.accept(UserDO::getId, UserDO::getId), UserDto::getCreateBy)
+                        .selectAs(AddressDO::getId, UserDto::getUserId)
+                        .select(UserDO::getId)
+                        .selectAs(UserDO::getName, UserDto::getUserName)
+                        .leftJoin(AddressDO.class, AddressDO::getUserId, UserDO::getId)
+                        .disableLogicDel().disableSubLogicDel()
+                        .le(UserDO::getId, 100), UserDto.class)
+                .leftJoin(AddressDO.class, AddressDO::getId, UserDto::getId)
+                .disableLogicDel().disableSubLogicDel()
+                .le(UserDto::getCreateBy, 100);
+        wrapper.list(UserDto.class);
+
+        //连表查询 返回自定义ResultType
+        List<UserDto> list = userMapper.selectJoinList(UserDto.class, wrapper);
+
+        //分页查询 （需要启用 mybatis plus 分页插件）
+        Page<UserDto> listPage = userMapper.selectJoinPage(new Page<>(2, 10), UserDto.class, wrapper);
+    }
+}
+```
+
+对应sql
+
+```
+SELECT
+    t.id,
+    t.user_id 
+FROM (
+        SELECT
+            CASE
+                WHEN t.id = 1 THEN 1 
+                WHEN t.id = 2 THEN 2
+                ELSE 3
+            END AS create_by,
+            t1.id AS user_id,
+            t.id,
+            t.`name` AS userName 
+        FROM
+            `user` t
+            LEFT JOIN address t1 ON ( t1.user_id = t.id ) 
+        WHERE (t.id <= ?) 
+    ) t
+    LEFT JOIN address t1 ON ( t1.id = t.id ) 
+WHERE (t.create_by <= ?)
+```
 
 #### 简单的连表查询
 

@@ -1,6 +1,6 @@
-package com.github.yulichang.test.kt.dto
+package com.github.leheyue.test.kt.dto
 
-import com.github.yulichang.test.kt.entity.AreaDO
+import com.github.leheyue.test.kt.entity.AreaDO
 
 class AddressDTO {
     val id: Int? = null

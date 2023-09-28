@@ -1,4 +1,4 @@
-package com.github.yulichang.test.kt.enums
+package com.github.leheyue.test.kt.enums
 
 import com.baomidou.mybatisplus.annotation.EnumValue
 

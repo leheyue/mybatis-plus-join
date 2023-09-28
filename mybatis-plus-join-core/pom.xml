@@ -5,7 +5,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.github.yulichang</groupId>
+        <groupId>com.github.leheyue</groupId>
         <artifactId>mybatis-plus-join-root</artifactId>
         <version>1.4.6</version>
     </parent>
@@ -14,7 +14,7 @@
     <name>mybatis-plus-join-core</name>
 
     <description>An enhanced toolkit of Mybatis-Plus to simplify development.</description>
-    <url>https://github.com/yulichang/mybatis-plus-join</url>
+    <url>https://github.com/leheyue/mybatis-plus-join</url>
     <licenses>
         <license>
             <name>The Apache License, Version 2.0</name>
@@ -24,14 +24,14 @@
     <developers>
         <developer>
             <id>mybatis-plus-join</id>
-            <name>yulichang</name>
-            <email>yu_lichang@qq.com</email>
+            <name>leheyue</name>
+            <email>leheyue@qq.com</email>
         </developer>
     </developers>
     <scm>
-        <connection>scm:git:https://github.com/yulichang/mybatis-plus-join.git</connection>
-        <developerConnection>scm:git:https://github.com/yulichang/mybatis-plus-join.git</developerConnection>
-        <url>https://github.com/yulichang/mybatis-plus-join</url>
+        <connection>scm:git:https://github.com/leheyue/mybatis-plus-join.git</connection>
+        <developerConnection>scm:git:https://github.com/leheyue/mybatis-plus-join.git</developerConnection>
+        <url>https://github.com/leheyue/mybatis-plus-join</url>
     </scm>
 
     <properties>
@@ -45,22 +45,22 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.github.yulichang</groupId>
+            <groupId>com.github.leheyue</groupId>
             <artifactId>mybatis-plus-join-annotation</artifactId>
             <version>1.4.6</version>
         </dependency>
         <dependency>
-            <groupId>com.github.yulichang</groupId>
+            <groupId>com.github.leheyue</groupId>
             <artifactId>mybatis-plus-join-adapter-v33x</artifactId>
             <version>1.4.6</version>
         </dependency>
         <dependency>
-            <groupId>com.github.yulichang</groupId>
+            <groupId>com.github.leheyue</groupId>
             <artifactId>mybatis-plus-join-adapter-v3431</artifactId>
             <version>1.4.6</version>
         </dependency>
         <dependency>
-            <groupId>com.github.yulichang</groupId>
+            <groupId>com.github.leheyue</groupId>
             <artifactId>mybatis-plus-join-adapter-v352</artifactId>
             <version>1.4.6</version>
         </dependency>
@@ -87,6 +87,12 @@
             <artifactId>kotlin-stdlib-jdk8</artifactId>
             <version>1.9.0</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.leheyue</groupId>
+            <artifactId>mybatis-plus-join-adapter-base</artifactId>
+            <version>1.4.6</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

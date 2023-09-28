@@ -1,6 +1,6 @@
-package com.yulichang.test.springboot3jdk17.dto;
+package com.leheyue.test.springboot3jdk17.dto;
 
-import com.yulichang.test.springboot3jdk17.entity.AreaDO;
+import com.leheyue.test.springboot3jdk17.entity.AreaDO;
 import lombok.Data;
 
 import java.util.List;

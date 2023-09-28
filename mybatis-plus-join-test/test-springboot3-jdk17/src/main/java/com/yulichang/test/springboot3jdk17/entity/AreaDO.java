@@ -1,4 +1,4 @@
-package com.yulichang.test.springboot3jdk17.entity;
+package com.leheyue.test.springboot3jdk17.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
