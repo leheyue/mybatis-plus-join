@@ -5,7 +5,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.github.leheyue</groupId>
+        <groupId>io.github.leheyue</groupId>
         <artifactId>mybatis-plus-join-root</artifactId>
         <version>1.4.6</version>
     </parent>
@@ -45,22 +45,22 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.github.leheyue</groupId>
+            <groupId>io.github.leheyue</groupId>
             <artifactId>mybatis-plus-join-annotation</artifactId>
             <version>1.4.6</version>
         </dependency>
         <dependency>
-            <groupId>com.github.leheyue</groupId>
+            <groupId>io.github.leheyue</groupId>
             <artifactId>mybatis-plus-join-adapter-v33x</artifactId>
             <version>1.4.6</version>
         </dependency>
         <dependency>
-            <groupId>com.github.leheyue</groupId>
+            <groupId>io.github.leheyue</groupId>
             <artifactId>mybatis-plus-join-adapter-v3431</artifactId>
             <version>1.4.6</version>
         </dependency>
         <dependency>
-            <groupId>com.github.leheyue</groupId>
+            <groupId>io.github.leheyue</groupId>
             <artifactId>mybatis-plus-join-adapter-v352</artifactId>
             <version>1.4.6</version>
         </dependency>
@@ -89,7 +89,7 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.leheyue</groupId>
+            <groupId>io.github.leheyue</groupId>
             <artifactId>mybatis-plus-join-adapter-base</artifactId>
             <version>1.4.6</version>
             <scope>compile</scope>

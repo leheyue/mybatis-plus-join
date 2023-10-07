@@ -14,7 +14,7 @@
         </dependency>
     -->
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.github.leheyue</groupId>
+    <groupId>io.github.leheyue</groupId>
     <artifactId>mybatis-plus-join</artifactId>
     <version>1.4.6</version>
     <name>mybatis-plus-join</name>
@@ -51,7 +51,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.github.leheyue</groupId>
+            <groupId>io.github.leheyue</groupId>
             <artifactId>mybatis-plus-join-boot-starter</artifactId>
             <version>1.4.6</version>
         </dependency>
